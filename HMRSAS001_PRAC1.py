@@ -2,12 +2,17 @@ import RPi.GPIO as GPIO
 import time
 
 # 1  2  4 BIN DIGITS
-#31 32 33 CORRESPONDING PINS
+#31 32 33 CORRESPONDING GPIO PINS
+# 6 12 13 CORRESPONDING BCM PIN LABELS
 
 GPIO.setmode(GPIO.BCM)
 
+# setup and pull down switch pins
+
 GPIO.setup(4,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(17,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+#setup LED pins
 
 GPIO.setup(6,GPIO.OUT)
 GPIO.setup(12,GPIO.OUT)
@@ -17,7 +22,10 @@ GPIO.output(6,GPIO.LOW)
 GPIO.output(12,GPIO.LOW)
 GPIO.output(13,GPIO.LOW)
 print("setup done")
+
 counter = 0
+
+#function for button press action
 
 def pushbutton():
 	global counter
@@ -38,6 +46,9 @@ def pushbutton():
 		print bin(counter)[2:].zfill(3)
 		time.sleep(.2)
 	return
+
+
+#functions for output to leds
 
 def led(c):
 	binarystr = bin(c)[2:].zfill(3)
@@ -66,6 +77,7 @@ def ledOff(pin):
 		GPIO.output(13,GPIO.LOW)
 	return
 
+#execution block
 
 try:
 	while True:
